@@ -1,8 +1,12 @@
+#include <SD.h>
+File myFile;
+const int CSPin = 4;
 const int In1 = 5;
-const int In2 = 10;
+const int In2 = 6;
 const int In3 = 9;
 const int In4 = 11;
 const int EnA = 3;
+const int EnB = 10;
 
 #define S0 A0
 #define S1 A1
@@ -19,7 +23,7 @@ int frequency = 0;
 void setup()
 {
   Serial.begin(9600);
-  pinMode(12, INPUT);
+  Serial.print("Initializing SD card...");
   pinMode(In1, OUTPUT);
   pinMode(In2, OUTPUT);
   pinMode(In3, OUTPUT);
@@ -34,6 +38,32 @@ void setup()
   digitalWrite(S0,HIGH);
   digitalWrite(S1,LOW);
   //digitalWrite(OE, LOW);
+  pinMode(CSPin, OUTPUT);
+
+  if (!SD.begin(CSPin))
+  {
+    Serial.println("initialization failed!");
+    return;
+  }
+  Serial.println("initialization done.");
+
+  myFile = SD.open("test.txt");
+
+  if (myFile)
+  {
+    Serial.println("test.txt:");
+
+    while (myFile.available())
+    {
+      Serial.write(myFile.read());
+    }
+    myFile.close();
+
+  }
+  else
+  {
+    Serial.println("error opening test.txt");                                   
+  }
 }
 
 void loop()
