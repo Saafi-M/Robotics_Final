@@ -17,6 +17,7 @@ void setup()
   pinMode(In3, OUTPUT);
   pinMode(In4, OUTPUT);
   pinMode(EnA, OUTPUT);
+  pinMode(EnB, OUTPUT);
   pinMode(CSPin, OUTPUT);
 
   if (!SD.begin(CSPin))
@@ -59,6 +60,7 @@ void goStraight()
   digitalWrite(In3, HIGH);
   digitalWrite(In4, LOW);
   analogWrite(EnA, 165);
+  analogWrite(EnB, 165);
   delay(2000);
   digitalWrite(In1, LOW);
   digitalWrite(In2, LOW);
